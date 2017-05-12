@@ -7,6 +7,9 @@ execute pathogen#infect()
 " Always show status line
 set laststatus=2
 
+" Show line numbers at startup
+set number
+
 " Github friendly tab stops
 set shiftwidth=2
 set softtabstop=2
