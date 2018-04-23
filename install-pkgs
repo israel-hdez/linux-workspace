@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+
+install_fedora_pkgs() {
+  sudo dnf install direnv
+}
+
+IS_FEDORA=1
+
+if [ -f /etc/os-release ]; then
+  grep '^NAME=Fedora' /etc/os-release -q
+  IS_FEDORA=$(($? == 0))
+fi
+
+if [ "$IS_FEDORA" -ne "0" ]; then
+  install_fedora_pkgs
+fi
