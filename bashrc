@@ -8,9 +8,9 @@ fi
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
-# User specific aliases and functions
 if [ -d $HOME/Projects/go ]; then
   export GOPATH=$HOME/Projects/go
+  export PATH="$PATH:$GOPATH/bin"
 fi
 
 # Add RVM to PATH for scripting, if RVM is installed.
@@ -29,7 +29,7 @@ if [ -n `which direnv` ]; then
   eval "$(direnv hook bash)"
 fi
 
-#### Aliases
+# User specific aliases and functions
 
 # Git
 alias gitc='git commit -v'
