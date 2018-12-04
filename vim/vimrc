@@ -15,3 +15,5 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 
+" Jenkinsfile syntax support
+au BufNewFile,BufRead Jenkinsfile setf groovy
