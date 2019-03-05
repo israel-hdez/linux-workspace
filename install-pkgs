@@ -5,13 +5,24 @@ install_fedora_pkgs() {
   sudo dnf install direnv
 }
 
+install_ubuntu_pkgs() {
+  sudo apt-get update
+  sudo apt-get install -y vim vim-gtk3 direnv
+}
+
 IS_FEDORA=1
 
 if [ -f /etc/os-release ]; then
   grep '^NAME=Fedora' /etc/os-release -q
   IS_FEDORA=$(($? == 0))
+
+  grep '^NAME=.\?Ubuntu' /etc/os-release -q
+  IS_UBUNTU=$(($? == 0))
 fi
 
 if [ "$IS_FEDORA" -ne "0" ]; then
   install_fedora_pkgs
+elif [ "$IS_UBUNTU" -ne "0" ]; then
+  install_ubuntu_pkgs
 fi
+
