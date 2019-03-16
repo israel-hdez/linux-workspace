@@ -53,3 +53,10 @@ alias gits='git status'
 alias gitb='git branch'
 alias gitco='git checkout'
 
+if [ -f "/usr/local/share/chruby/chruby.sh" ]; then
+  source /usr/local/share/chruby/chruby.sh
+fi
+
+if [ -f "/usr/local/share/gem_home/gem_home.sh" ]; then
+  source /usr/local/share/gem_home/gem_home.sh
+fi

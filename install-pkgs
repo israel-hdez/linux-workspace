@@ -11,6 +11,7 @@ install_ubuntu_pkgs() {
 }
 
 IS_FEDORA=1
+IS_UBUNTU=1
 
 if [ -f /etc/os-release ]; then
   grep '^NAME=Fedora' /etc/os-release -q
