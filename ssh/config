@@ -1,3 +1,6 @@
+Host *
+	EscapeChar ~
+
 # Don't validate host keys for local network machines, nor save them in a known
 # hosts file
 Host 192.168.1.?? 192.168.1.???
