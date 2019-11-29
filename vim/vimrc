@@ -17,3 +17,8 @@ set expandtab
 
 " Jenkinsfile syntax support
 au BufNewFile,BufRead Jenkinsfile setf groovy
+
+" Set dark background, to make coloring look good in tmux
+if !(has("gui_running"))
+  set background=dark
+endif
