@@ -55,7 +55,7 @@ bindkey "\e[H" beginning-of-line
 bindkey "\e[F" end-of-line
 
 # Hightlighting commands like the Fish shell
-source $HOME/Projects/dotfiles/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/Projects/linux-workspace/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Prompt customization
 # default is PROMPT="[%n@%m]%~%# "
@@ -69,6 +69,6 @@ if [ -f "$HOME/.zshrc.local" ]; then
 fi
 
 # Load direnv
-if [ -n `which direnv` ]; then
+if type "direnv" &> /dev/null; then
   eval "$(direnv hook zsh)"
 fi

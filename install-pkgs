@@ -2,7 +2,8 @@
 #
 
 install_fedora_pkgs() {
-  sudo dnf install direnv
+  sudo dnf install -y zsh tmux
+  # sudo dnf install direnv
 }
 
 install_ubuntu_pkgs() {
@@ -16,6 +17,12 @@ IS_UBUNTU=1
 if [ -f /etc/os-release ]; then
   grep '^NAME=Fedora' /etc/os-release -q
   IS_FEDORA=$(($? == 0))
+
+
+  if [ "$IS_FEDORA" -eq "0" ]; then
+    grep '^ID_LIKE=.\?fedora' /etc/os-release -q
+    IS_FEDORA=$(($? == 0))
+  fi
 
   grep '^NAME=.\?Ubuntu' /etc/os-release -q
   IS_UBUNTU=$(($? == 0))
