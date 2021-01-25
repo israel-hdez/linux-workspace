@@ -1,0 +1,9 @@
+[user]
+	name = Edgar Hernández
+	email = 23639005+israel-hdez@users.noreply.github.com
+[pull]
+	rebase = true
+[push]
+	default = simple
+[core]
+	editor = gvim -f
