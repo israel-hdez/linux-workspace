@@ -2,7 +2,8 @@
 #
 
 install_fedora_pkgs() {
-  sudo dnf install -y zsh tmux
+  sudo dnf install -y htop tmux xfce4-terminal zsh
+  sudo dnf groupinstall -y "Development Tools"
   # sudo dnf install direnv
 }
 

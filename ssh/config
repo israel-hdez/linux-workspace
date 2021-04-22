@@ -6,6 +6,6 @@ Host *
 Host 192.168.1.?? 192.168.1.???
 	StrictHostKeyChecking no
 	UserKnownHostsFile /dev/null
-Host 192.168.100.?? 192.168.100.???
+Host 192.168.100.?? 192.168.100.??? 192.168.128.?
 	StrictHostKeyChecking no
 	UserKnownHostsFile /dev/null

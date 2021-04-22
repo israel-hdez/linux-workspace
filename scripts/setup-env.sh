@@ -25,3 +25,15 @@ fi
 if [ ! -e $HOME/.zshrc ]; then
   ln -s $PROJECT/zshrc $HOME/.zshrc
 fi
+
+# Preferred XFCE4 Terminal configs
+if [ ! -e $HOME/.config/xfce4/terminal/terminalrc ]; then
+  mkdir -p $HOME/.config/xfce4/terminal/
+  ln -s $PROJECT/xfce4rc $HOME/.config/xfce4/terminal/terminalrc
+fi
+
+# Preferred ssh config
+if [ ! -e $HOME/.ssh/config ]; then
+  mkdir -p $HOME/.ssh
+  ln -s $PROJECT/ssh/config $HOME/.ssh/config
+fi

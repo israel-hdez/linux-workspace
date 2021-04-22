@@ -26,7 +26,7 @@ MiscSlimTabs=FALSE
 MiscNewTabAdjacent=FALSE
 MiscSearchDialogOpacity=100
 MiscShowUnsafePasteDialog=TRUE
-FontName=Monospace 9
+FontName=Monospace 11
 RunCustomCommand=TRUE
 CustomCommand=/bin/tmux
 
