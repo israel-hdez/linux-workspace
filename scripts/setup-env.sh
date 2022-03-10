@@ -54,7 +54,7 @@ if [ "$HOME/Projects/linux-workspace" != "$PROJECT" ]; then
   mkdir -p $HOME/Projects
   $(cd $HOME/Projects; git clone https://github.com/israel-hdez/linux-workspace.git)
 
-  $HOME/Projects/linux-workspace/setup-env.sh
+  $HOME/Projects/linux-workspace/scripts/setup-env.sh
   exit $?
 fi
 
