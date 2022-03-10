@@ -52,7 +52,7 @@ if [ "$HOME/Projects/linux-workspace" != "$PROJECT" ]; then
 
   pkg_install git
   mkdir -p $HOME/Projects
-  git clone -C $HOME/Projects https://github.com/israel-hdez/linux-workspace.git
+  $(cd $HOME/Projects; git clone https://github.com/israel-hdez/linux-workspace.git)
 
   $HOME/Projects/linux-workspace/setup-env.sh
   exit $?
