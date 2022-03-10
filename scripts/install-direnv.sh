@@ -3,8 +3,7 @@
 
 set -x
 
-
-if [ "$IS_FEDORA" == "1" ]; then
+if [ "$DISTRO" == "fedora" ]; then
   # Check if direnv is available in repositories
   dnf info direnv > /dev/null
   DIRENV_REPO=$(($? == 0))
@@ -26,3 +25,4 @@ if [ "$IS_FEDORA" == "1" ]; then
     fi
   fi
 fi
+

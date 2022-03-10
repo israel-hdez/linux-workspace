@@ -2,7 +2,7 @@
 
 set -x
 
-DL_VERSION=$(curl 'https://golang.org/VERSION?m=text')
+DL_VERSION=$(curl 'https://go.dev/VERSION?m=text')
 INSTALL_DIR=$HOME/apps/$DL_VERSION
 
 if [ ! -d "$INSTALL_DIR" ]; then

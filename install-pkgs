@@ -1,5 +1,9 @@
 #!/bin/bash
 #
+# This script is deprecated in favor of scripts/setup-env.sh
+# However, the new script does not support ubuntu. So, this
+# is left for future reference when it is time to add
+# support for Ubuntu or Debian-like systems
 
 install_fedora_pkgs() {
   sudo dnf install -y htop tmux xfce4-terminal zsh
