@@ -58,8 +58,6 @@ if [ "$HOME/Projects/linux-workspace" != "$PROJECT" ]; then
   exit $?
 fi
 
-exit 0
-
 # Make sure that submodules are present
 (cd $PROJECT; git submodule init; git submodule update)
 
