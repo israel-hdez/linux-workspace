@@ -110,13 +110,18 @@ zstyle ':vcs_info:*' formats '%K{cyan}%F{black} %r %K{green} %b %K{250}%F{000} %
 zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
 precmd () {
   vcs_info
+  local host_info=""
+
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    host_info="%K{red}%F{bg-white} $USER@$HOSTNAME"
+  fi
 
   if [ "$vcs_info_msg_0_" = '' ]; then
     _PMPT="
-%K{250}%F{000} %~> %k%f %# "
+$host_info %K{250}%F{000} %~> %k%f %# "
   else
     _PMPT="
-${vcs_info_msg_0_} %k%f %# "
+$host_info ${vcs_info_msg_0_} %k%f %# "
   fi
 }
 
