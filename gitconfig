@@ -1,9 +1,12 @@
 [user]
 	name = Edgar Hernández
 	email = 23639005+israel-hdez@users.noreply.github.com
+	signingkey = A6EB92C7F7A2374E!
 [pull]
 	rebase = true
 [push]
 	default = simple
 [core]
 	editor = gvim -f
+[commit]
+	gpgsign = true
