@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eux
+set -ux
 
 ### OS detection
 DISTRO="unknown"
