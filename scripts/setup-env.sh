@@ -72,6 +72,8 @@ fi
 $PROJECT/scripts/install-direnv.sh
 $PROJECT/scripts/install-go.sh
 $PROJECT/scripts/install-nvm.sh
+$PROJECT/scripts/install-container-tools.sh
+$PROJECT/scripts/install-desktop-apps.sh
 
 ### Install configurations
 
@@ -105,6 +107,7 @@ fi
 if [ ! -e $HOME/.ssh/config ]; then
   mkdir -p $HOME/.ssh
   ln -s $PROJECT/ssh/config $HOME/.ssh/config
+  chmod 600 $PROJECT/ssh/config
 fi
 
 ### Finish setup

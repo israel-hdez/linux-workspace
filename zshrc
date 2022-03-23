@@ -113,15 +113,15 @@ precmd () {
   local host_info=""
 
   if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    host_info="%K{red}%F{bg-white} $USER@$HOSTNAME"
+    host_info="%K{red}%F{bg-white} $USER@$HOSTNAME "
   fi
 
   if [ "$vcs_info_msg_0_" = '' ]; then
     _PMPT="
-$host_info %K{250}%F{000} %~> %k%f %# "
+$host_info%K{250}%F{000} %~> %k%f %# "
   else
     _PMPT="
-$host_info ${vcs_info_msg_0_} %k%f %# "
+$host_info${vcs_info_msg_0_} %k%f %# "
   fi
 }
 
