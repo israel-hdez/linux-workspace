@@ -100,6 +100,9 @@ if [ -f "$HOME/apps/go/bin/go" ]; then
   fi
 fi
 
+# XDG related
+export XDG_CONFIG_HOME="$HOME/.config"
+
 
 ### Prompt customization
 zstyle ':vcs_info:*' enable git 
