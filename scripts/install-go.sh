@@ -2,7 +2,7 @@
 
 set -x
 
-DL_VERSION=$(curl 'https://go.dev/VERSION?m=text')
+DL_VERSION=$(curl -s 'https://go.dev/dl/?mode=json' | jq -r '.[0].version')
 INSTALL_DIR=$HOME/apps/$DL_VERSION
 
 if [ ! -d "$INSTALL_DIR" ]; then
