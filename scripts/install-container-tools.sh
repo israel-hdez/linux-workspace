@@ -62,5 +62,16 @@ if [ "$DISTRO" == "fedora" ]; then
     curl https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-4.13/openshift-client-linux.tar.gz | \
       tar -C $HOME/.local/bin -zx oc
   fi
+
+  # Install Kustomize
+  if [ ! -e $HOME/.local/bin/kustomize ]; then
+    kustomize_pkg_to_install=$(curl https://api.github.com/repos/kubernetes-sigs/kustomize/releases | \
+      grep "browser_download.*linux_amd64" | \
+      cut -d '"' -f 4 | \
+      sort -V | \
+      tail -n 1)
+    curl -L $kustomize_pkg_to_install | \
+      tar -xz -C $HOME/.local/bin/ -f -
+  fi
 fi
 
