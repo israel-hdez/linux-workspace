@@ -56,5 +56,11 @@ if [ "$DISTRO" == "fedora" ]; then
     curl -L https://github.com/derailed/k9s/releases/download/$k9s_version_to_install/k9s_Linux_amd64.tar.gz | \
       tar -C $HOME/.local/bin -zx k9s
   fi
+
+  # Install oc CLI
+  if [ ! -e $HOME/.local/bin/oc ]; then
+    curl https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-4.13/openshift-client-linux.tar.gz | \
+      tar -C $HOME/.local/bin -zx oc
+  fi
 fi
 
