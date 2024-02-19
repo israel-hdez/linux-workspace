@@ -42,7 +42,7 @@ if [ "$DISTRO" == "fedora" ]; then
     fi
   fi
 
-  # Install kubectl
+  # Install k9s
   if [ ! -e $HOME/.local/bin/k9s ]; then
     k9s_version_to_install=$(curl https://api.github.com/repos/derailed/k9s/releases | \
       grep "tag_name" | \
@@ -53,9 +53,8 @@ if [ "$DISTRO" == "fedora" ]; then
       echo "ERROR: Cannot determine k9s version to install"
     fi
 
-    curl -L https://github.com/derailed/k9s/releases/download/$k9s_version_to_install/k9s_Linux_x86_64.tar.gz | \
+    curl -L https://github.com/derailed/k9s/releases/download/$k9s_version_to_install/k9s_Linux_amd64.tar.gz | \
       tar -C $HOME/.local/bin -zx k9s
-    #chmod u+x $HOME/.local/bin/k9s
   fi
 fi
 
