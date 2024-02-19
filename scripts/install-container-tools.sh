@@ -5,6 +5,12 @@ set -x
 if [ "$DISTRO" == "fedora" ]; then
   # Check if docker is available in repositories
 
+  # Install AWS CLI
+  sudo dnf install awscli2
+
+  # Install ROSA CLI
+  curl https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest/rosa-linux.tar.gz | tar -C $HOME/.local/bin -xz
+
   # Enable container-tools module (podman)
   sudo dnf module install -y container-tools
   if [ $? -ne 0 ]; then
