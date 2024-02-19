@@ -6,7 +6,7 @@ set -ux
 DISTRO="unknown"
 
 if [ -f /etc/os-release ]; then
-  grep '^NAME=Fedora' /etc/os-release -q
+  grep '^NAME=.\?Fedora' /etc/os-release -q
   if [ $? -eq 0 ]; then DISTRO="fedora"; fi
 
 
@@ -50,7 +50,7 @@ if [ "$HOME/Projects/linux-workspace" != "$PROJECT" ]; then
   # continue on that state. So, clone the git repo and re-run from the
   # downloaded sources.
 
-  pkg_install git
+  pkg_install git git-crypt
   mkdir -p $HOME/Projects
   $(cd $HOME/Projects; git clone https://github.com/israel-hdez/linux-workspace.git)
 
@@ -76,6 +76,7 @@ $PROJECT/scripts/install-container-tools.sh
 $PROJECT/scripts/install-desktop-apps.sh
 
 ### Install configurations
+# TODO: Show status of symlinks
 
 # vim configs
 if [ ! -e $HOME/.vim ]; then
@@ -115,6 +116,10 @@ fi
 # If we are not in zsh, start a new (preferred) terminal. It should start
 # with tmux+zsh, which is the preferred setup.
 if [[ "$SHELL" != *"zsh"* ]]; then
+  # TODO: Migrate to Xfconf: Your Terminal settings have been migrated to Xfconf. The config file terminalrc is not used anymore.
+  # TODO: The following comand can block the terminal
   xfce4-terminal
 fi
 
+# TODO: Setup GPG - reset - sudo service pcscd restart
+# TODO: Setup password store
