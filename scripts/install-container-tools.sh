@@ -21,8 +21,9 @@ if [ "$DISTRO" == "fedora" ]; then
   # Install VBox
   dnf repolist | grep -q VirtualBox
   if [ $? -ne 0 ]; then
-    sudo dnf config-manager --add-repo https://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo
-    sudo dnf install -y kernel-devel VirtualBox-6.1
+    sudo dnf config-manager --add-repo https://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
+    sudo dnf install -y kernel-devel # Install in a separate step, to ensure vbox is configured correctly
+    sudo dnf install -y VirtualBox-7.0
   fi
 
   # Install minikube
