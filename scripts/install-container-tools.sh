@@ -73,5 +73,23 @@ if [ "$DISTRO" == "fedora" ]; then
     curl -L $kustomize_pkg_to_install | \
       tar -xz -C $HOME/.local/bin/ -f -
   fi
+
+  # Install operator-sdk
+  # TODO
+  if [ ! -e $HOME/.local/bin/operator-sdk ]; then
+    operator_sdk_version_to_install=$(curl https://api.github.com/repos/operator-framework/operator-sdk/releases | \
+      grep "tag_name" | \
+      sed -e 's/.*://' -e 's/ *"//' -e 's/",//' | \
+      sort -t "." -k 1.2g,1 -k 2g,2 -k 3g | \
+      tail -n 1)
+    #operator_sdk_url=https://github.com/operator-framework/operator-sdk/releases/download/$operator_sdk_version_to_install
+    curl -LO $operator_sdk_url/operator-sdk_linux_amd64
+    #gpg --keyserver keyserver.ubuntu.com --recv-keys 052996E2A20B5C7E
+    #curl -LO ${OPERATOR_SDK_DL_URL}/checksums.txt
+    #curl -LO ${OPERATOR_SDK_DL_URL}/checksums.txt.asc
+    #gpg -u "Operator SDK (release) <cncf-operator-sdk@cncf.io>" --verify checksums.txt.asc
+    #grep operator-sdk_${OS}_${ARCH} checksums.txt | sha256sum -c -
+    #chmod +x operator-sdk_${OS}_${ARCH} && sudo mv operator-sdk_${OS}_${ARCH} /usr/local/bin/operator-sdk
+  fi
 fi
 
