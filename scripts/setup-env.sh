@@ -74,6 +74,7 @@ $PROJECT/scripts/install-go.sh
 $PROJECT/scripts/install-nvm.sh
 $PROJECT/scripts/install-container-tools.sh
 $PROJECT/scripts/install-desktop-apps.sh
+$PROJECT/scripts/install-dev-tools.sh
 
 ### Install configurations
 # TODO: Show status of symlinks

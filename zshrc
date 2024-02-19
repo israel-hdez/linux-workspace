@@ -79,6 +79,12 @@ if [ -n "$ZSH_VERSION" ] && [ -f $HOME/.local/share/gem_home/gem_home.sh ]; then
   .  $HOME/.local/share/gem_home/gem_home.sh
 fi
 
+# Python related
+if [ -f "$HOME/apps/pyenv/bin/pyenv" ]; then
+  export PYENV_ROOT="$HOME/apps/pyenv"
+  export PATH="$HOME/apps/pyenv/bin/:$PATH"
+  eval "$(pyenv init -)"
+fi
 
 # Load local environment
 if [ -f "$HOME/.zshrc.local" ]; then
