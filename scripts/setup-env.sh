@@ -106,11 +106,7 @@ if [ ! -e $HOME/.config/xfce4/terminal/terminalrc ]; then
 fi
 
 # ssh config
-if [ ! -e $HOME/.ssh/config ]; then
-  mkdir -p $HOME/.ssh
-  ln -s $PROJECT/ssh/config $HOME/.ssh/config
-  chmod 600 $PROJECT/ssh/config
-fi
+$PROJECT/scripts/setup-ssh.sh
 
 ### Finish setup
 

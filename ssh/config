@@ -9,3 +9,22 @@ Host 192.168.1.?? 192.168.1.???
 Host 192.168.100.?? 192.168.100.??? 192.168.128.?
 	StrictHostKeyChecking no
 	UserKnownHostsFile /dev/null
+
+# Specify some identities for GitHub, so that it is easier to use multiple
+# accounts in the same machine. The first one is the default and it is a symlink
+# to the one that ssh-keygen creates with default name for an ed25519 key.
+# The gh_israel host will rarely be used, since is the account I use mostly. So,
+# the secondary gh_edgar entry is the one that would be configured for the
+# repositories that are stored in that account.
+# Reference: https://superuser.com/questions/366649/ssh-config-same-host-but-different-keys-and-usernames
+Host gh_israel
+	Hostname github.com
+	User git
+	IdentitiesOnly yes
+	IdentityFile ~/.ssh/github_israel_hdez
+Host gh_edgar
+	Hostname github.com
+	User git
+	IdentitiesOnly yes
+	IdentityFile ~/.ssh/github_edgarHzg
+
