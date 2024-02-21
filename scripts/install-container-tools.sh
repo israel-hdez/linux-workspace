@@ -18,6 +18,11 @@ if [ "$DISTRO" == "fedora" ]; then
     sudo dnf install -y --setopt=install_weak_deps=False podman
   fi
 
+  # If docker CLI is not available, create docker as an alias to podman
+  if ! command -v docker &> /dev/null; then
+    ln -s $(which podman) $HOME/.local/bin/docker
+  fi
+
   # Install VBox
   dnf repolist | grep -q VirtualBox
   if [ $? -ne 0 ]; then
