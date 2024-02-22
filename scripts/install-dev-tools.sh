@@ -5,7 +5,7 @@ set -x
 #sudo dnf install gitk
 
 # Install yq
-if [ ! -e $HOME/.local/bin/kubectl ]; then
+if [ ! -e $HOME/.local/bin/yq ]; then
   yq_version_to_install=$(curl -s https://api.github.com/repos/mikefarah/yq/releases/latest | \
     grep "tag_name" | \
     sed -e 's/.*://' -e 's/ *"//' -e 's/",//')
