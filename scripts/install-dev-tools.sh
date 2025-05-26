@@ -17,8 +17,8 @@ if [ ! -e $HOME/.local/bin/yq ]; then
   chmod +x $HOME/.local/bin/yq
 fi
 
-# Install grpcurl
-sudo dnf install grpcurl
+# Install grpcurl and gitk
+sudo dnf install -y grpcurl gitk
 
 # Install Snyk CLI
 snyk_to_install=$(curl https://api.github.com/repos/snyk/cli/releases | \
