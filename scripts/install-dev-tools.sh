@@ -40,19 +40,30 @@ if [ ! -e $HOME/.local/bin/kubebuilder ]; then
 fi
 
 # Install Python tools
-## Poetry
-#curl -sSL https://install.python-poetry.org | python3 -
+sudo dnf install -y pipx
+pipx ensurepath
+if ! command -v poetry &> /dev/null; then
+  #echo "Installing Poetry" 
+  pipx install poetry
 
+  # NOTE: KServe uses a modified version of the poetry-version-plugin, which should be
+  # injected to poetry by running this command inside the KServe source code:
+  #     $ pipx inject poetry -e python/plugin/poetry-version-plugin
+  # The official one would be installed with:
+  #     $ poetry self add poetry-version-plugin
+fi
 # From kserve scripts:
-#poetry config virtualenvs.create true
-#poetry config virtualenvs.in-project true
-#poetry config installer.parallel true
-#echo "Installing Poetry Version Plugin" 
-#pip install -e python/plugin/poetry-version-plugin
-## poetry self add poetry-version-plugin -- Need KServe version
+poetry config virtualenvs.create true
+poetry config virtualenvs.in-project true
+poetry config installer.parallel true
 
-## pyenv - based on pyenv-installer script
-#sudo dnf install -y dnf-plugins-core
-#sudo dnf builddep -y python3
-#git -c advice.detachedHead=0 clone --branch v2.3.32 --depth 1 https://github.com/pyenv/pyenv.git $HOME/apps/pyenv
-#git -c advice.detachedHead=0 clone --branch master --depth 1 https://github.com/pyenv/pyenv-update.git $HOME/apps/pyenv/plugins/pyenv-update
+if ! command -v pyenv &> /dev/null; then
+  # pyenv - based on pyenv-installer script
+  # TODO: Find a way to install latest version/tag of pyenv
+  # TODO: Install some predefined versions I use????
+  sudo dnf install -y dnf-plugins-core
+  sudo dnf builddep -y python3
+  git -c advice.detachedHead=0 clone --branch v2.3.36 --depth 1 https://github.com/pyenv/pyenv.git $HOME/apps/pyenv
+  git -c advice.detachedHead=0 clone --branch master --depth 1 https://github.com/pyenv/pyenv-update.git $HOME/apps/pyenv/plugins/pyenv-update
+  git -c advice.detachedHead=0 clone --branch master --depth 1 https://github.com/pyenv/pyenv-virtualenv.git $HOME/apps/pyenv/plugins/pyenv-virtualenv
+fi
