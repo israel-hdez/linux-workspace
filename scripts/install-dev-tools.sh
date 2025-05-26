@@ -31,6 +31,14 @@ if [ ! -e $HOME/.local/bin/snyk ]; then
   chmod +x $HOME/.local/bin/snyk
 fi
 
+if [ ! -e $HOME/.local/bin/kubebuilder ]; then
+  kubebuilder_to_install=$(curl https://api.github.com/repos/kubernetes-sigs/kubebuilder/releases/latest | jq -r '.tag_name')
+  curl -L -o $HOME/.local/bin/kubebuilder-$kubebuilder_to_install "https://go.kubebuilder.io/dl/latest/$(go env GOOS)/$(go env GOARCH)"
+  chmod +x $HOME/.local/bin/kubebuilder-$kubebuilder_to_install
+  rm -f $HOME/.local/bin/kubebuilder
+  ln -s $HOME/.local/bin/kubebuilder-$kubebuilder_to_install $HOME/.local/bin/kubebuilder
+fi
+
 # Install Python tools
 ## Poetry
 #curl -sSL https://install.python-poetry.org | python3 -
