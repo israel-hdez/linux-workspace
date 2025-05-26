@@ -21,13 +21,15 @@ fi
 sudo dnf install -y grpcurl gitk
 
 # Install Snyk CLI
-snyk_to_install=$(curl https://api.github.com/repos/snyk/cli/releases | \
-  grep "tag_name" | \
-  sed -e 's/.*://' -e 's/ *"//' -e 's/",//' | \
-  sort -t "." -k 1.2g,1 -k 2g,2 -k 3g | \
-  tail -n 1)
-curl -L https://github.com/snyk/cli/releases/download/$snyk_to_install/snyk-linux -o $HOME/.local/bin/snyk
-chmod +x $HOME/.local/bin/snyk
+if [ ! -e $HOME/.local/bin/snyk ]; then
+  snyk_to_install=$(curl https://api.github.com/repos/snyk/cli/releases | \
+    grep "tag_name" | \
+    sed -e 's/.*://' -e 's/ *"//' -e 's/",//' | \
+    sort -t "." -k 1.2g,1 -k 2g,2 -k 3g | \
+    tail -n 1)
+  curl -L https://github.com/snyk/cli/releases/download/$snyk_to_install/snyk-linux -o $HOME/.local/bin/snyk
+  chmod +x $HOME/.local/bin/snyk
+fi
 
 # Install Python tools
 ## Poetry
