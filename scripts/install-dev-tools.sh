@@ -67,3 +67,14 @@ if ! command -v pyenv &> /dev/null; then
   git -c advice.detachedHead=0 clone --branch master --depth 1 https://github.com/pyenv/pyenv-update.git $HOME/apps/pyenv/plugins/pyenv-update
   git -c advice.detachedHead=0 clone --branch master --depth 1 https://github.com/pyenv/pyenv-virtualenv.git $HOME/apps/pyenv/plugins/pyenv-virtualenv
 fi
+
+# Install minio cli
+# NOTE: the minio ´mc´ command shadows the Midnight Commander. I don't use MC,
+#   so this is OK for me, for the time being.
+if [ ! -e $HOME/.local/bin/mc ]; then
+  curl -o $HOME/.local/bin/mc https://dl.min.io/client/mc/release/linux-amd64/mc
+  chmod +x $HOME/.local/bin/mc
+fi
+
+# Java related
+sudo dnf install maven # Note: in Fedora, this also installs jdk and makes javac available.
