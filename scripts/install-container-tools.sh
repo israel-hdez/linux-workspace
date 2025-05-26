@@ -35,6 +35,10 @@ if [ "$DISTRO" == "fedora" ]; then
   if [ ! -e $HOME/.local/bin/minikube ]; then
     curl -L https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -o $HOME/.local/bin/minikube
     chmod u+x $HOME/.local/bin/minikube
+    minikube config set driver kvm2
+    minikube config set cpus 3
+    minikube config set disk-size 80G
+    minikube config set memory 8G
   fi
 
   # Install kubectl
