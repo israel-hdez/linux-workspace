@@ -10,3 +10,7 @@
 	editor = gvim -f
 [commit]
 	gpgsign = true
+[alias]
+	recommit = !git commit -eF $(git rev-parse --git-dir)/COMMIT_EDITMSG
+	find-merge = "!sh -c 'COMMIT=$0; TARGET_BRANCH=${1:-HEAD}; git rev-list ${COMMIT}..${TARGET_BRANCH} --ancestry-path | grep -f <(git rev-list ${COMMIT}..${TARGET_BRANCH} --first-parent) | tail -1'"
+	show-merge = "!sh -c 'merge=$(git find-merge $0 $1); [ -n \"$merge\" ] && git show $merge'"
