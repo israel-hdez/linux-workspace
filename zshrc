@@ -109,6 +109,9 @@ fi
 # XDG related
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# Container development
+export REGISTRY_AUTH_FILE=$HOME/.secrets/podman_auth.json   # Persist logins
+export KUBE_EDITOR=vim
 
 ### Prompt customization
 zstyle ':vcs_info:*' enable git 
