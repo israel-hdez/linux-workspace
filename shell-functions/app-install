@@ -1,0 +1,9 @@
+#!/bin/env zsh
+
+function app-install() {
+  app=$1
+
+  if [[ "minikube" = "$1" ]]; then
+    $HOME/Projects/linux-workspace/shell-functions/app-install-helpers/install-minikube
+  fi
+}

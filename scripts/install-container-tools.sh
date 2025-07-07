@@ -31,16 +31,6 @@ if [ "$DISTRO" == "fedora" ]; then
     sudo dnf install -y VirtualBox-7.0
   fi
 
-  # Install minikube
-  if [ ! -e $HOME/.local/bin/minikube ]; then
-    curl -L https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -o $HOME/.local/bin/minikube
-    chmod u+x $HOME/.local/bin/minikube
-    minikube config set driver kvm2
-    minikube config set cpus 3
-    minikube config set disk-size 80G
-    minikube config set memory 8G
-  fi
-
   # Install kubectl
   if [ ! -e $HOME/.local/bin/kubectl ]; then
     curl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o $HOME/.local/bin/kubectl

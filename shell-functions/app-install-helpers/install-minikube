@@ -1,0 +1,41 @@
+#!/bin/env zsh
+
+set -eu
+
+tmp_file=$(mktemp)
+trap "rm $tmp_file" EXIT
+curl -s https://api.github.com/repos/kubernetes/minikube/releases/latest > $tmp_file
+
+latest_version=$(jq -r '.tag_name' $tmp_file)
+echo "Latest minikube version is $latest_version"
+
+version_installed=""
+if command -v minikube >/dev/null 2>&1; then
+  version_installed=$(minikube version --short)
+  echo "Installed minikube version is $version_installed"
+
+  if [[ $version_installed == $latest_version ]]; then
+    echo "Installed version is up to date."
+    exit 0
+  else
+
+  fi
+fi
+
+download_url=$(jq -r '.assets | map(select(.name == "minikube-linux-amd64"))[0] | .browser_download_url' $tmp_file)
+download_to=$HOME/.local/bin/minikube-${latest_version}
+echo "Downloading minikube from: $download_url"
+echo "Downloading minikube to: $download_to"
+curl -sL $download_url -o $download_to
+chmod u+x $download_to
+ln -sf $download_to $HOME/.local/bin/minikube
+
+if [[ $version_installed = "" ]]; then
+  echo "Configuring minikube defaults:"
+  echo " driver=kvm2; cpus=3; disk-size=80G; memory=8G"
+  minikube config set driver kvm2
+  minikube config set cpus 3
+  minikube config set disk-size 80G
+  minikube config set memory 8G
+fi
+
