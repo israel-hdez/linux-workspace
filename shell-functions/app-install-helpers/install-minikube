@@ -17,8 +17,6 @@ if command -v minikube >/dev/null 2>&1; then
   if [[ $version_installed == $latest_version ]]; then
     echo "Installed version is up to date."
     exit 0
-  else
-
   fi
 fi
 

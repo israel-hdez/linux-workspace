@@ -1,0 +1,31 @@
+#!/bin/env zsh
+
+set -eu
+
+tmp_file=$(mktemp)
+trap "rm $tmp_file" EXIT
+curl -sSf https://api.github.com/repos/ko-build/ko/releases/latest > $tmp_file
+
+latest_version=$(jq -r '.tag_name' $tmp_file)
+echo "Latest ko version is $latest_version"
+
+version_installed=""
+if command -v ko >/dev/null 2>&1; then
+  version_installed=$(ko version)
+  echo "Installed ko version is $version_installed"
+
+  if [[ ${version_installed#v} == ${latest_version#v} ]]; then
+    echo "Installed version is up to date."
+    exit 0
+  fi
+fi
+
+asset_name="ko_${latest_version#v}_Linux_x86_64.tar.gz"
+download_url=$(jq -r ".assets | map(select(.name == \"$asset_name\"))[0] | .browser_download_url" $tmp_file)
+download_to=$HOME/.local/bin/ko-${latest_version}
+echo "Downloading ko from: $download_url"
+echo "Downloading ko to: $download_to"
+curl -sSfL $download_url | tar -zx --transform="s/ko/ko-${latest_version}/" -C $HOME/.local/bin
+chmod u+x $download_to
+ln -sf $download_to $HOME/.local/bin/ko
+
