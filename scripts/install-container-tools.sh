@@ -31,16 +31,6 @@ if [ "$DISTRO" == "fedora" ]; then
     sudo dnf install -y VirtualBox-7.0
   fi
 
-  # Install kubectl
-  if [ ! -e $HOME/.local/bin/kubectl ]; then
-    curl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o $HOME/.local/bin/kubectl
-    kubectl_checksum=$(curl -L "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256")
-    echo "$kubectl_checksum  $HOME/.local/bin/kubectl" | sha256sum --check
-    if [ $? -eq 0 ]; then
-      chmod u+x $HOME/.local/bin/kubectl
-    fi
-  fi
-
   # Install k9s
   if [ ! -e $HOME/.local/bin/k9s ]; then
     k9s_version_to_install=$(curl https://api.github.com/repos/derailed/k9s/releases | \

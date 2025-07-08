@@ -1,0 +1,34 @@
+#!/bin/env zsh
+
+set -eu
+
+latest_version=$(curl -L -s https://dl.k8s.io/release/stable.txt)
+echo "Latest kubectl version is $latest_version"
+
+version_installed=""
+if command -v kubectl >/dev/null 2>&1; then
+  version_installed=$(kubectl version --client=true -o json | jq -r '.clientVersion.gitVersion')
+  echo "Installed kubectl version is $version_installed"
+
+  if [[ ${version_installed#v} == ${latest_version#v} ]]; then
+    echo "Installed version is up to date."
+    exit 0
+  fi
+fi
+
+download_url="https://dl.k8s.io/release/${latest_version}/bin/linux/amd64/kubectl"
+download_to=$HOME/.local/bin/kubectl-${latest_version}
+echo "Downloading kubectl from: $download_url"
+echo "Downloading kubectl to: $download_to"
+curl -sSfL $download_url -o $download_to
+
+kubectl_checksum=$(curl -sL "https://dl.k8s.io/${latest_version}/bin/linux/amd64/kubectl.sha256")
+echo "$kubectl_checksum  ${download_to}" | sha256sum --check
+if [ $? -eq 0 ]; then
+  chmod u+x $download_to
+  ln -sf $download_to $HOME/.local/bin/kubectl
+else
+  echo "kubectl checksum verification failed"
+  rm $download_to
+fi
+
