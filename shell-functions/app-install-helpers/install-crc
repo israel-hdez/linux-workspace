@@ -1,0 +1,42 @@
+#!/bin/env zsh
+
+set -eu
+
+tmp_file=$(mktemp)
+trap "rm $tmp_file" EXIT
+
+release_info_url=$(curl -Ls https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/ | grep 'http.*release-info.json' | sed -nr 's/.*(http.*\.json).*/\1/p')
+curl -sL $release_info_url > $tmp_file
+
+latest_version=$(jq -r '.version.crcVersion' $tmp_file)
+echo "Latest crc version is $latest_version"
+
+version_installed=""
+if command -v crc >/dev/null 2>&1; then
+  version_installed=$(crc version -o json | jq -r '.version')
+  echo "Installed crc version is $version_installed"
+
+  if [[ $version_installed == $latest_version ]]; then
+    echo "Installed version is up to date."
+    exit 0
+  fi
+fi
+
+download_url=$(jq -r '.links.linux' $tmp_file)
+download_to=$HOME/.local/bin/crc-${latest_version}
+echo "Downloading crc from: $download_url"
+echo "Downloading crc to: $download_to"
+curl -sL $download_url | tar --transform="s/crc/crc-${latest_version}/g" --strip-components=1 -xJf - -C $HOME/.local/bin '*/crc'
+chmod u+x $download_to
+ln -sf $download_to $HOME/.local/bin/crc
+
+if [[ $version_installed = "" ]]; then
+  echo "Configuring crc defaults:"
+  echo " cpus=6; disk-size=90G; memory=12G"
+  crc config set consent-telemetry no
+  crc config set cpus 8
+  crc config set disk-size 90G
+  crc config set memory 12G
+  crc config set kubeadmin-password kadm
+fi
+
