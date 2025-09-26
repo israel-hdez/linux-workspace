@@ -1,0 +1,37 @@
+#!/bin/env zsh
+
+set -eu
+
+tmp_file=$(mktemp)
+trap "rm $tmp_file" EXIT
+curl -sSf https://api.github.com/repos/kubernetes-sigs/kustomize/releases/latest > $tmp_file
+
+latest_version=$(jq -r '.tag_name' $tmp_file)
+if [[ $latest_version != "kustomize/"* ]]; then
+  echo "Unrecognized tag_name in the GitHub release entry: $latest_version"
+  exit 1
+fi
+
+latest_version=${latest_version#"kustomize/"}
+echo "Latest kustomize version is $latest_version"
+
+version_installed=""
+if command -v kustomize >/dev/null 2>&1; then
+  version_installed=$(kustomize version -o json | jq -r '.version')
+  echo "Installed kustomize version is $version_installed"
+
+  if [[ ${version_installed#v} == ${latest_version#v} ]]; then
+    echo "Installed version is up to date."
+    exit 0
+  fi
+fi
+
+asset_name="kustomize_${latest_version}_linux_amd64.tar.gz"
+download_url=$(jq -r ".assets | map(select(.name == \"$asset_name\"))[0] | .browser_download_url" $tmp_file)
+download_to=$HOME/.local/bin/kustomize-${latest_version}
+echo "Downloading kustomize from: $download_url"
+echo "Downloading kustomize to: $download_to"
+curl -sSfL $download_url | tar -zx --transform="s/kustomize/kustomize-${latest_version}/" -C $HOME/.local/bin
+chmod u+x $download_to
+ln -sf $download_to $HOME/.local/bin/kustomize
+

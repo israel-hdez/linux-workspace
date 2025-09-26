@@ -52,17 +52,6 @@ if [ "$DISTRO" == "fedora" ]; then
       tar -C $HOME/.local/bin -zx oc
   fi
 
-  # Install Kustomize
-  if [ ! -e $HOME/.local/bin/kustomize ]; then
-    kustomize_pkg_to_install=$(curl https://api.github.com/repos/kubernetes-sigs/kustomize/releases | \
-      grep "browser_download.*linux_amd64" | \
-      cut -d '"' -f 4 | \
-      sort -V | \
-      tail -n 1)
-    curl -L $kustomize_pkg_to_install | \
-      tar -xz -C $HOME/.local/bin/ -f -
-  fi
-
   # Install operator-sdk
   # TODO
   if [ ! -e $HOME/.local/bin/operator-sdk ]; then
