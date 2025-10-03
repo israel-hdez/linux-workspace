@@ -18,4 +18,8 @@ function app-install() {
   if [[ "crc" = "$1" ]]; then
     $HOME/Projects/linux-workspace/shell-functions/app-install-helpers/install-crc
   fi
+
+  if [[ "gh" = "$1" ]]; then
+    $HOME/Projects/linux-workspace/shell-functions/app-install-helpers/install-gh
+  fi
 }

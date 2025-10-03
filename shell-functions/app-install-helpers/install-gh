@@ -1,0 +1,29 @@
+#!/bin/env zsh
+
+set -eu
+
+tmp_file=$(mktemp)
+trap "rm $tmp_file" EXIT
+curl -sSf https://api.github.com/repos/cli/cli/releases/latest > $tmp_file
+
+latest_version=$(jq -r '.tag_name' $tmp_file)
+echo "Latest gh version is $latest_version"
+
+version_installed=""
+if command -v gh >/dev/null 2>&1; then
+  version_installed=$(gh --version | grep tag | sed -n 's/.*\/\(v.*\)$/\1/p')
+  echo "Installed gh version is $version_installed"
+
+  if [[ ${version_installed#v} == ${latest_version#v} ]]; then
+    echo "Installed version is up to date."
+    exit 0
+  fi
+fi
+
+asset_name="gh_${latest_version#v}_linux_amd64"
+full_asset_name="${asset_name}.tar.gz"
+download_url=$(jq -r ".assets | map(select(.name == \"$full_asset_name\"))[0] | .browser_download_url" $tmp_file)
+echo "Downloading gh from: $download_url"
+curl -sSfL $download_url | tar -zx -C $HOME/apps
+ln -sf $HOME/apps/$asset_name/bin/gh $HOME/.local/bin/gh
+
