@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -eu
+
+DL_VERSION=$(curl -s 'https://go.dev/dl/?mode=json' | jq -r '.[0].version')
+INSTALL_DIR=$HOME/apps/$DL_VERSION
+
+echo "Latest go version is $DL_VERSION"
+
+if [ ! -d "$INSTALL_DIR" ]; then
+  download_url="https://golang.org/dl/$DL_VERSION.linux-amd64.tar.gz"
+  echo "Directory $INSTALL_DIR does not exists."
+  echo "Downloading go from $download_url and installing to $INSTALL_DIR"
+  mkdir -p $INSTALL_DIR
+  curl -L $download_url | tar -C $INSTALL_DIR -zx --strip-components=1
+  ln -sfn $INSTALL_DIR $HOME/apps/go
+  mkdir -p $HOME/Projects/go
+else
+  echo "Directory $INSTALL_DIR exists. Assuming $DL_VERSION is installed."
+fi

@@ -70,7 +70,6 @@ if [ "$DISTRO" == "fedora" ]; then
 fi
 
 $PROJECT/scripts/install-direnv.sh
-$PROJECT/scripts/install-go.sh
 $PROJECT/scripts/install-nvm.sh
 $PROJECT/scripts/install-container-tools.sh
 $PROJECT/scripts/install-desktop-apps.sh
