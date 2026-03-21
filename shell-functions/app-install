@@ -1,33 +1,15 @@
 #!/bin/env zsh
 
 function app-install() {
-  app=$1
+  helpers_directory=$HOME/Projects/linux-workspace/shell-functions/app-install-helpers
+  helper_script=$helpers_directory/install-$1
+  helper_script=${helper_script:A}
 
-  if [[ "go" = "$1" ]]; then
-    $HOME/Projects/linux-workspace/shell-functions/app-install-helpers/install-go
-  fi
-
-  if [[ "minikube" = "$1" ]]; then
-    $HOME/Projects/linux-workspace/shell-functions/app-install-helpers/install-minikube
-  fi
-  if [[ "ko" = "$1" ]]; then
-    $HOME/Projects/linux-workspace/shell-functions/app-install-helpers/install-ko
-  fi
-  if [[ "kubectl" = "$1" ]]; then
-    $HOME/Projects/linux-workspace/shell-functions/app-install-helpers/install-kubectl
-  fi
-  if [[ "kustomize" = "$1" ]]; then
-    $HOME/Projects/linux-workspace/shell-functions/app-install-helpers/install-kustomize
-  fi
-  if [[ "crc" = "$1" ]]; then
-    $HOME/Projects/linux-workspace/shell-functions/app-install-helpers/install-crc
-  fi
-
-  if [[ "gh" = "$1" ]]; then
-    $HOME/Projects/linux-workspace/shell-functions/app-install-helpers/install-gh
-  fi
-
-  if [[ "claude" = "$1" ]]; then
-    $HOME/Projects/linux-workspace/shell-functions/app-install-helpers/install-claude
+  if [[ "${helper_script:h}" != "${helpers_directory}" ]]; then
+    echo "The string $1 is not a valid argument."
+  elif [[ ! -f "$helper_script" ]]; then
+    echo "There is no script to install $1"
+  else
+    $helper_script
   fi
 }
