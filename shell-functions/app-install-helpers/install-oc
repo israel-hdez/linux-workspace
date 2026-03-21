@@ -1,0 +1,29 @@
+#!/bin/env zsh
+
+set -eu
+
+tmp_file=$(mktemp)
+trap "rm $tmp_file" EXIT
+
+latest_version=$(curl -Ls https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/release.txt | grep 'Version:' | sed 's/[^0-9]*//')
+echo "Latest oc version is $latest_version"
+
+version_installed=""
+if command -v oc >/dev/null 2>&1; then
+  version_installed=$(oc version -o json | jq -r '.releaseClientVersion')
+  echo "Installed oc version is $version_installed"
+
+  if [[ $version_installed == $latest_version ]]; then
+    echo "Installed version is up to date."
+    exit 0
+  fi
+fi
+
+download_url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz"
+download_to=$HOME/.local/bin/oc-v${latest_version}
+echo "Downloading oc from: $download_url"
+echo "Downloading oc to: $download_to"
+curl -sL $download_url | tar --transform="s/oc/oc-v${latest_version}/g" -xzf - -C $HOME/.local/bin 'oc'
+chmod u+x $download_to
+ln -sf $download_to $HOME/.local/bin/oc
+
