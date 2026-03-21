@@ -1,0 +1,29 @@
+#!/bin/env zsh
+
+set -eu
+
+tmp_file=$(mktemp)
+trap "rm $tmp_file" EXIT
+curl -sSf https://api.github.com/repos/openshift-online/ocm-cli/releases/latest > $tmp_file
+
+latest_version=$(jq -r '.tag_name' $tmp_file)
+echo "Latest ocm version is $latest_version"
+
+version_installed=""
+if command -v ocm >/dev/null 2>&1; then
+  version_installed=$(ocm version)
+  echo "Installed ocm version is $version_installed"
+
+  if [[ ${version_installed#v} == ${latest_version#v} ]]; then
+    echo "Installed version is up to date."
+    exit 0
+  fi
+fi
+
+asset_name="ocm-linux-amd64"
+download_url=$(jq -r ".assets | map(select(.name == \"$asset_name\"))[0] | .browser_download_url" $tmp_file)
+echo "Downloading ocm from: $download_url"
+curl -sSfLo $HOME/.local/bin/ocm-${latest_version} $download_url
+chmod u+x $HOME/.local/bin/ocm-${latest_version}
+ln -sf $HOME/.local/bin/ocm-${latest_version} $HOME/.local/bin/ocm
+
