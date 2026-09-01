@@ -15,3 +15,6 @@
 	find-merge = "!sh -c 'COMMIT=$0; TARGET_BRANCH=${1:-HEAD}; git rev-list ${COMMIT}..${TARGET_BRANCH} --ancestry-path | grep -f <(git rev-list ${COMMIT}..${TARGET_BRANCH} --first-parent) | tail -1'"
 	show-merge = "!sh -c 'merge=$(git find-merge $0 $1); [ -n \"$merge\" ] && git show $merge'"
 	cherry-detailed = !git cherry $@ | grep '^+' | cut -d ' ' -f2 | xargs git show -s --format=format:\"%h [%ae - %an] %s\"
+	del-gh-branch = "!f() { git branch -d \"$1\" && git push origin --delete \"$1\"; }; f"
+[merge]
+	stat = false
